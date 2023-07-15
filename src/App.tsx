@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./App.css";
-import Todolist from "./Todolist";
 import OnOff from "./OnOff";
+import Todolist from "./Todolist";
+import { type } from "os";
 
 export type TaskType = {
   id: number;
@@ -9,25 +10,28 @@ export type TaskType = {
   isDone: boolean;
   additional?: boolean;
 };
-
+export type FilterType = "all" | "active" | "completed";
 function App() {
   let [tasks, setTasks] = useState<TaskType[]>([
-    { id: 1, title: "HTML", isDone: true },
+    { id: 1, title: "Html", isDone: true },
     { id: 2, title: "React", isDone: false },
     { id: 3, title: "Redux", isDone: false },
   ]);
+  let [filter, setFilter] = useState<FilterType>("all");
+  if (filter === "active") tasks = tasks.filter((task) => !task.isDone);
+  if (filter === "completed") tasks = tasks.filter((task) => task.isDone);
 
   const removeTask = (id: number) =>
     setTasks(tasks.filter((task) => task.id !== id));
+  const changeFilter = (value: FilterType) => setFilter(value);
   return (
     <div className="App">
       <Todolist
-        title={"what to learn"}
+        title="to learn"
         tasks={tasks}
-        condition={true}
         removeTask={removeTask}
+        changeFilter={changeFilter}
       />
-
       <OnOff on={true} />
       <OnOff on={false} />
     </div>

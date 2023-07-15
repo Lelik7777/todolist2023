@@ -1,19 +1,25 @@
 import React from "react";
-import { TaskType } from "./App";
+import { FilterType, TaskType } from "./App";
 
 type PropsType = {
   title: string;
   tasks: TaskType[];
-  condition?: boolean;
-  removeTask: (id:number) => void;
+  removeTask: (id: number) => void;
+  changeFilter: (value: FilterType) => void;
 };
+export default function Todolist({ title, tasks, removeTask,changeFilter }: PropsType) {
+  const marginLeft = { marginLeft: "10px" };
 
-export default function Todolist({ title, tasks, condition,removeTask }: PropsType) {
-  const arrayTasks = tasks.map((task: TaskType) => (
+  const arrayTasks = tasks.map((task) => (
     <li key={task.id}>
-      <input type="checkbox" checked={task.isDone} />
-      <span>{task.title}</span>
-      <button onClick={()=>removeTask(task.id)}>x</button>
+      <input type="checkbox" checked={task.isDone} /> <span>{task.title}</span>
+      <button
+        style={marginLeft}
+        onClick={() => {
+          removeTask(task.id);
+        }}>
+        x
+      </button>
     </li>
   ));
   return (
@@ -25,11 +31,10 @@ export default function Todolist({ title, tasks, condition,removeTask }: PropsTy
       </div>
       <ul>{arrayTasks}</ul>
       <div>
-        <button>All</button>
-        <button>Active</button>
-        <button>Completed</button>
+        <button onClick={()=>changeFilter('all')}>All</button>
+        <button onClick={()=>changeFilter('active')}>Active</button>
+        <button onClick={()=>changeFilter('completed')}>Completed</button>
       </div>
-      {condition && <div style={{ marginTop: "50px" }}>Condition</div>}
     </div>
   );
 }
