@@ -1,24 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import Todolist from "./Todolist";
+import OnOff from "./OnOff";
+
+export type TaskType = {
+  id: number;
+  title: string;
+  isDone: boolean;
+  additional?: boolean;
+};
 
 function App() {
+  let [tasks, setTasks] = useState<TaskType[]>([
+    { id: 1, title: "HTML", isDone: true },
+    { id: 2, title: "React", isDone: false },
+    { id: 3, title: "Redux", isDone: false },
+  ]);
+
+  const removeTask = (id: number) =>
+    setTasks(tasks.filter((task) => task.id !== id));
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Todolist
+        title={"what to learn"}
+        tasks={tasks}
+        condition={true}
+        removeTask={removeTask}
+      />
+
+      <OnOff on={true} />
+      <OnOff on={false} />
     </div>
   );
 }
