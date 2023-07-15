@@ -1,8 +1,8 @@
 import { useState } from "react";
 import "./App.css";
-import OnOff from "./OnOff";
+import OnOff from "./components/OnOff";
 import Todolist from "./Todolist";
-import Messages from "./Messages";
+import Messages from "./components/Messages";
 
 export type TaskType = {
   id: number;
@@ -32,7 +32,7 @@ function App() {
         removeTask={removeTask}
         changeFilter={changeFilter}
       />
-      
+
       <OnOff on={true} />
       <OnOff on={false} />
       <Messages />
