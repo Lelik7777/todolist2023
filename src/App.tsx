@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import OnOff from "./OnOff";
 import Todolist from "./Todolist";
-import { type } from "os";
+import Messages from "./Messages";
 
 export type TaskType = {
   id: number;
@@ -32,8 +32,10 @@ function App() {
         removeTask={removeTask}
         changeFilter={changeFilter}
       />
+      
       <OnOff on={true} />
       <OnOff on={false} />
+      <Messages />
     </div>
   );
 }
