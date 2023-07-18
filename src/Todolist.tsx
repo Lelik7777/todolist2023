@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { FilterType, TaskType } from "./App";
 
 type PropsType = {
   title: string;
   tasks: TaskType[];
   removeTask: (id: number) => void;
-  changeFilter: (value: FilterType) => void;
 };
-export default function Todolist({ title, tasks, removeTask,changeFilter }: PropsType) {
+export default function Todolist({ title, tasks, removeTask }: PropsType) {
+  let [filter, setFilter] = useState<FilterType>("all");
   const marginLeft = { marginLeft: "10px" };
+
+  if (filter === "active") tasks = tasks.filter((task) => !task.isDone);
+  if (filter === "completed") tasks = tasks.filter((task) => task.isDone);
 
   const arrayTasks = tasks.map((task) => (
     <li key={task.id}>
@@ -31,9 +34,9 @@ export default function Todolist({ title, tasks, removeTask,changeFilter }: Prop
       </div>
       <ul>{arrayTasks}</ul>
       <div>
-        <button onClick={()=>changeFilter('all')}>All</button>
-        <button onClick={()=>changeFilter('active')}>Active</button>
-        <button onClick={()=>changeFilter('completed')}>Completed</button>
+        <button onClick={() => setFilter("all")}>All</button>
+        <button onClick={() => setFilter("active")}>Active</button>
+        <button onClick={() => setFilter("completed")}>Completed</button>
       </div>
     </div>
   );

@@ -17,21 +17,13 @@ function App() {
     { id: 2, title: "React", isDone: false },
     { id: 3, title: "Redux", isDone: false },
   ]);
-  let [filter, setFilter] = useState<FilterType>("all");
-  if (filter === "active") tasks = tasks.filter((task) => !task.isDone);
-  if (filter === "completed") tasks = tasks.filter((task) => task.isDone);
 
   const removeTask = (id: number) =>
     setTasks(tasks.filter((task) => task.id !== id));
-  const changeFilter = (value: FilterType) => setFilter(value);
+
   return (
     <div className="App">
-      <Todolist
-        title="to learn"
-        tasks={tasks}
-        removeTask={removeTask}
-        changeFilter={changeFilter}
-      />
+      <Todolist title="to learn" tasks={tasks} removeTask={removeTask} />
 
       <OnOff on={true} />
       <OnOff on={false} />
