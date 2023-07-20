@@ -35,3 +35,6 @@
 .error {
   border: 2px solid red;
 }
+.active{
+  background-color: gold;
+}

@@ -85,9 +85,9 @@ export default function Todolist({
       </div>
       <ul>{arrayTasks}</ul>
       <div>
-        <button onClick={() => changeFilter("all")}>All</button>
-        <button onClick={() => changeFilter("active")}>Active</button>
-        <button onClick={() => changeFilter("completed")}>Completed</button>
+        <button className={filter==='all'?'active':''} onClick={() => changeFilter("all")}>All</button>
+        <button className={filter==='active'?'active':''} onClick={() => changeFilter("active")}>Active</button>
+        <button className={filter==='completed'?'active':''} onClick={() => changeFilter("completed")}>Completed</button>
       </div>
     </div>
   );

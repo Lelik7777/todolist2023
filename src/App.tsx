@@ -13,6 +13,7 @@ export type TaskType = {
 };
 
 function App() {
+  let [on,setOn]=useState<boolean>(false);
   let [tasks, setTasks] = useState<TaskType[]>([
     { id: v1(), title: "Html", isDone: true },
     { id: v1(), title: "React", isDone: false },
@@ -39,8 +40,8 @@ function App() {
         changeCheckedInput={changeCheckedInput}
       />
 
-      <OnOff on={true} />
-      <OnOff on={false} />
+      <OnOff on={on} setOn={setOn}/>
+      <OnOff on={on} setOn={setOn}/>
       <Messages />
     </div>
   );
