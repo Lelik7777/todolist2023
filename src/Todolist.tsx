@@ -2,15 +2,17 @@ import React, { useState, MouseEvent, ChangeEvent, KeyboardEvent } from "react";
 import { TaskType } from "./App";
 
 type PropsType = {
+  listId: string;
   title: string;
   tasks: TaskType[];
-  removeTask: (id: string) => void;
-  addTask: (title: string) => void;
-  changeCheckedInput: (id: string, isDone: boolean) => void;
+  removeTask: (idTodo: string, id: string) => void;
+  addTask: (idTodo: string, title: string) => void;
+  changeCheckedInput: (idTodo: string,id: string, isDone: boolean) => void;
 };
-type FilterType = "all" | "completed" | "active";
+export type FilterType = "all" | "completed" | "active";
 
 export default function Todolist({
+  listId,
   title,
   tasks,
   removeTask,
@@ -27,9 +29,9 @@ export default function Todolist({
   if (filter === "completed") tasks = tasks.filter((task) => task.isDone);
 
   const arrayTasks = tasks.map((task) => {
-    const handlerOnClick = () => removeTask(task.id);
+    const handlerOnClick = () => removeTask(listId, task.id);
     const addInputCheckboxHandler = (e: ChangeEvent<HTMLInputElement>) =>
-      changeCheckedInput(task.id, e.currentTarget.checked);
+      changeCheckedInput(listId,task.id, e.currentTarget.checked);
     return (
       <li key={task.id}>
         <input
@@ -50,7 +52,7 @@ export default function Todolist({
       return;
     }
 
-    addTask(taskTitle);
+    addTask(listId, taskTitle);
     setTaskTitle("");
   };
   const addInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -58,12 +60,12 @@ export default function Todolist({
     setError(false);
   };
   const addKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    if(!taskTitle){
+    if (!taskTitle) {
       setError(true);
       return;
     }
     if (e.key === "Enter" && taskTitle) {
-      addTask(taskTitle);
+      addTask(listId,taskTitle);
       setTaskTitle("");
     }
   };
@@ -85,9 +87,21 @@ export default function Todolist({
       </div>
       <ul>{arrayTasks}</ul>
       <div>
-        <button className={filter==='all'?'active':''} onClick={() => changeFilter("all")}>All</button>
-        <button className={filter==='active'?'active':''} onClick={() => changeFilter("active")}>Active</button>
-        <button className={filter==='completed'?'active':''} onClick={() => changeFilter("completed")}>Completed</button>
+        <button
+          className={filter === "all" ? "active" : ""}
+          onClick={() => changeFilter("all")}>
+          All
+        </button>
+        <button
+          className={filter === "active" ? "active" : ""}
+          onClick={() => changeFilter("active")}>
+          Active
+        </button>
+        <button
+          className={filter === "completed" ? "active" : ""}
+          onClick={() => changeFilter("completed")}>
+          Completed
+        </button>
       </div>
     </div>
   );
